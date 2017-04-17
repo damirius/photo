@@ -12,10 +12,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  * @Gedmo\Uploadable(
- * path="%kernel.root_dir%/../web/uploads/photos",
+ * path="../app/Resources/uploads/avatar",
  * allowOverwrite=false,
  * appendNumber=true,
- * allowedTypes="image/jpeg, image/pjpeg, image/png, image/x-png")
+ * allowedTypes="image/jpeg,image/pjpeg,image/png,image/x-png,image/gif",
+ * filenameGenerator="ALPHANUMERIC")
  */
 class User extends BaseUser
 {
@@ -31,6 +32,12 @@ class User extends BaseUser
      * @Gedmo\UploadableFilePath
      */
     private $avatar;
+
+    /**
+     * @ORM\Column(nullable=true)
+     * @Gedmo\UploadableFileName
+     */
+    private $avatarName;
 
     /**
      * @var Comment[]
@@ -102,5 +109,29 @@ class User extends BaseUser
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set avatarName
+     *
+     * @param string $avatarName
+     *
+     * @return User
+     */
+    public function setAvatarName($avatarName)
+    {
+        $this->avatarName = $avatarName;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarName
+     *
+     * @return string
+     */
+    public function getAvatarName()
+    {
+        return $this->avatarName;
     }
 }

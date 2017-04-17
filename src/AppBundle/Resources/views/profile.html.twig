@@ -1,0 +1,26 @@
+{% extends '@App/layout.html.twig' %}
+{% form_theme userForm 'bootstrap_3_layout.html.twig' %}
+{% block title %}{{ parent() }}Profile{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4">
+            Hi, <strong>{{ app.user.username }}</strong><br/>
+            Your email is {{ app.user.email }}
+        </div>
+        {% if app.user.avatar %}
+        <div class="col-xs-4">
+            <img src="{{ asset(app.user.avatarName)| imagine_filter('default_avatar') }}" class="img-responsive" />
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            {{ form_start(userForm) }}
+            {{ form_widget(userForm) }}
+            {{ form_end(userForm) }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

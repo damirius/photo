@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Form\Type\UserType;
+
 class DefaultController extends Controller
 {
     /**
@@ -81,5 +83,27 @@ class DefaultController extends Controller
             'albums' => $albums,
             'search' => $search
         ]);
+    }
+
+    /**
+     * @Route("/profile", name="profile_view")
+     */
+    public function profileAction(Request $request)
+    {
+        $user = $this->getUser();
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $imagineCacheManager = $this->get('liip_imagine.cache.manager');
+            $imagineCacheManager->remove($user->getAvatarName(),'default_avatar');
+            $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+            $uploadableManager->markEntityToUpload($user, $userForm->get('newavatar')->getData());
+            $em->persist($user);
+            $em->flush();
+        }
+
+        return $this->render('@App/profile.html.twig',[
+            'userForm'=>$userForm->createView()]);
     }
 }

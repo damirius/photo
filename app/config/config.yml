@@ -38,6 +38,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        fos_csrf_provider: "@security.csrf.token_manager"
 
 # Doctrine Configuration
 doctrine:
@@ -85,7 +87,9 @@ liip_imagine:
     loaders:
         default:
             filesystem:
-                data_root: "%kernel.root_dir%/Resources/uploads/photos/"
+                data_root:
+                    - "%kernel.root_dir%/Resources/uploads/photos/"
+                    - "%kernel.root_dir%/Resources/uploads/avatar/"
     filter_sets:
         default_watermark:
             filters:
@@ -105,5 +109,11 @@ liip_imagine:
                     image: ../src/AppBundle/Resources/data/watermark.png
                     size: 0.2
                     position: bottomright
+        default_avatar:
+            filters:
+                thumbnail:
+                    mode: outbound
+                    size: [64,64]
+                    allow_upscale: true
 
 

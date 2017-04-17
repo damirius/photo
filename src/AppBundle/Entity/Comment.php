@@ -37,6 +37,13 @@ class Comment
     private $user;
 
     /**
+     * @var Album
+     *
+     * @ORM\ManyToOne(targetEntity="Album", inversedBy="comments")
+     */
+    private $album;
+
+    /**
      * Get id
      *
      * @return integer
@@ -116,5 +123,29 @@ class Comment
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set album
+     *
+     * @param \AppBundle\Entity\Album $album
+     *
+     * @return Comment
+     */
+    public function setAlbum(\AppBundle\Entity\Album $album = null)
+    {
+        $this->album = $album;
+
+        return $this;
+    }
+
+    /**
+     * Get album
+     *
+     * @return \AppBundle\Entity\Album
+     */
+    public function getAlbum()
+    {
+        return $this->album;
     }
 }

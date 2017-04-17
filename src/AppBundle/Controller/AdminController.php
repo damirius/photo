@@ -88,27 +88,6 @@ class AdminController extends Controller
             $uploadableManager->markEntityToUpload($photo, $photo->getPath());
             $em->persist($photo);
             $em->flush();
-            /*$fullPath =$photo->getName();
-            $imagineCacheManager = $this->get('liip_imagine.cache.manager');
-            $imagineFilterManager = $this->get('liip_imagine.filter.manager');
-            $imagineDataManager = $this->get('liip_imagine.data.manager');
-            $binary = $imagineDataManager->find('default_watermark', $fullPath);
-            $filteredBinary = $imagineFilterManager->applyFilter($binary, 'default_watermark');
-            $imagineCacheManager->store($filteredBinary, $fullPath, 'default_watermark');
-            dump($imagineCacheManager->resolve($fullPath, 'default_watermark'));*/
-            /*
-            $imagineCacheManager = $this->get('liip_imagine.cache.manager');
-            $imagineFilterManager = $this->get('liip_imagine.filter.manager');
-            $imagineDataManager = $this->get('liip_imagine.data.manager');
-            $binary = $imagineDataManager->find('default_watermark', $photo->getPath());
-            $filteredBinary = $imagineFilterManager->applyFilter($binary, 'default_watermark');
-            $imagineCacheManager->store($filteredBinary, $photo->getPath(), 'default_watermark');
-            $fullPath = realpath($this->getParameter('kernel.root_dir') . "/../web/" .parse_url($imagineCacheManager->resolve($photo->getPath(), 'default_watermark'), PHP_URL_PATH));
-            $uploadableManager->markEntityToUpload($photo, new WebFileInfo($fullPath));
-            $em->persist($photo);
-            $em->flush();
-            $imagineCacheManager->remove(null,'default_watermark');
-            */
         }
 
         return $this->render('AppBundle:admin:edit_album.html.twig',['form' => $form->createView(),

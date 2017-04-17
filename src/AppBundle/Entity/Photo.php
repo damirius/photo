@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * path="../app/Resources/uploads/photos",
  * allowOverwrite=false,
  * appendNumber=true,
- * allowedTypes="image/jpeg, image/pjpeg, image/png, image/x-png",
+ * allowedTypes="image/jpeg,image/pjpeg,image/png,image/x-png,image/gif",
  * filenameGenerator="ALPHANUMERIC"
  * )
  */

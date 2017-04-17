@@ -17,7 +17,6 @@ class AlbumRepository extends EntityRepository
             ->groupBy('a.id')
             ->orderBy('a.created','DESC')
             ->getQuery();
-        dump($query->getSQL());
         return $query->getResult();
     }
 
