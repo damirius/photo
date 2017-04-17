@@ -1,0 +1,24 @@
+<div class="col-md-3 col-xs-12">
+    <div class="row">
+        <span class="col-xs-12"><a href="{{ path('album_view', {'id':album.id}) }}"><strong>{{ album.title }}</strong></a></span>
+    </div>
+    <div class="row">
+        <span class="col-xs-12"><small>in <a href="{{ path('category_view',{'category': album.category.name }) }}">{{ album.category.name }}</a></small></span>
+    </div>
+    <div class="row">
+        {% if album.photos.first %}
+            <div class="col-xs-12">
+                <a href="{{ path('album_view', {'id':album.id}) }}">
+                    <img src="{{ asset(album.photos.first.name)| imagine_filter('default_watermark_thumb') }}" class="img-rounded img-responsive" />
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {% for tag in album.tags %}
+                <a href="{{ path('tag_view', {'tag': tag.name}) }}"><span class="label label-info">{{ tag.name }}</span></a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

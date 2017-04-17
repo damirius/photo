@@ -1,0 +1,11 @@
+{% extends '@App/layout.html.twig' %}
+{% block title %}{{ parent() }}Albums{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for album in albums %}
+            {% include '@App/helper/album_element.html.twig' with {'album': album} %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

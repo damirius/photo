@@ -1,0 +1,58 @@
+{% extends '@App/layout.html.twig' %}
+{% block title %}{{ parent() }} Album {{ album.title }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/blueimp-gallery/css/blueimp-gallery.min.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <span class="col-xs-12">
+                <strong>{{ album.title }}</strong>
+                <small>in <a href="{{ path('category_view',{'category': album.category.name }) }}">{{ album.category.name }}</a></small>
+            </span>
+        </div>
+        <div class="row">
+            <span class="col-xs-12">{{ album.description }}</span>
+        </div>
+        <div class="row">
+            <div id="links" class="col-xs-12">
+                <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
+                <div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+                    <div class="slides"></div>
+                    <h3 class="title"></h3>
+                    <a class="prev">‹</a>
+                    <a class="next">›</a>
+                    <a class="play-pause"></a>
+                    <ol class="indicator"></ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                {% for tag in album.tags %}
+                    <a href="{{ path('tag_view', {'tag': tag.name}) }}"><span class="label label-info">{{ tag.name }}</span></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/blueimp-gallery/js/blueimp-gallery.min.js') }}"></script>
+    <script>
+        blueimp.Gallery(
+                [
+                    {% for photo in album.photos %}
+                    '{{ asset(photo.name)| imagine_filter('default_watermark') }}',
+                    {% endfor %}
+                ],
+                {
+                    container: '#blueimp-gallery-carousel',
+                    carousel: true,
+                    startSlideshow: false,
+                }
+        );
+    </script>
+{% endblock %}

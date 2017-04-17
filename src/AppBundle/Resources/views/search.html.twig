@@ -1,0 +1,16 @@
+{% extends '@App/layout.html.twig' %}
+{% block title %}{{ parent() }}{{ search }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <strong class="col-xs-12">All Albums with <strong>{{ search }} in title</strong></strong>
+        </div>
+        <div class="row">
+            {% for album in albums %}
+                {% include '@App/helper/album_element.html.twig' with {'album': album} %}
+            {% else %}
+                <span class="col-xs-12">No Albums found for {{ search }}</span>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

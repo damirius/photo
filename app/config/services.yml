@@ -1,0 +1,18 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+    app.form.type.album:
+        class: AppBundle\Form\Type\AlbumType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+    imagine.data.loader.upload_loader:
+        class: AppBundle\Imagine\Binary\Loader\UploadedLoader
+        arguments:
+            - "@liip_imagine.mime_type_guesser"
+            - "@liip_imagine.extension_guesser"
+        tags:
+            - { name: "liip_imagine.binary.loader", loader: upload_loader }

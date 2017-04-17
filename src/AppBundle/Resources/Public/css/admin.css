@@ -1,0 +1,12 @@
+body { padding-top: 70px; }
+@media (min-width: 768px) {
+	.table-row {
+		display: table;
+		table-layout: fixed;
+	}
+
+	.table-row [class^="col-"] {
+		display: table-cell;
+		float: none;
+	}
+}

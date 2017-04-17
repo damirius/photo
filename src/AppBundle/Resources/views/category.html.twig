@@ -1,0 +1,16 @@
+{% extends '@App/layout.html.twig' %}
+{% block title %}{{ parent() }}{{ category.name }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <strong class="col-xs-12">All Albums in <strong>{{ category.name }}</strong></strong>
+        </div>
+        <div class="row">
+            {% for album in albums %}
+                {% include '@App/helper/album_element.html.twig' with {'album': album} %}
+            {% else %}
+                <span class="col-xs-12">No Albums found in {{ category.name }}</span>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

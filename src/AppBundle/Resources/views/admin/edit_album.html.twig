@@ -1,0 +1,40 @@
+{% extends '@App/admin/layout.html.twig' %}
+{% block title %}{{ parent() }} Edit Album {% endblock %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% form_theme photoForm 'bootstrap_3_layout.html.twig' %}
+{% block content %}
+    <div class="container">
+        {{ form_start(form, {'attr': {'id': 'photo_edit'}}) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.tags) }}
+        {{ form_end(form) }}
+    </div>
+
+    <div class="container">
+        {{ form_start(photoForm, {'attr': {'id': 'photo_add'}}) }}
+        {{ form_row(photoForm.path) }}
+        {{ form_end(photoForm) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        $(document).ready(function(){
+            $("#album_category").select2({
+                tags: true,
+                createSearchChoice:function(term, data) {
+                    if ($(data).filter(function() {
+                                return this.text.localeCompare(term)===0;
+                            }).length===0)
+                    {return {id:term, text:term};}
+                },
+            });
+            $("#album_tags").select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+        });
+    </script>
+{% endblock %}

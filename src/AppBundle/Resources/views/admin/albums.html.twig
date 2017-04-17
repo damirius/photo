@@ -1,0 +1,42 @@
+{% extends '@App/admin/layout.html.twig' %}
+{% block title %}{{ parent() }} Albums {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-info" role="button" href="{{ path('admin_albums_add') }}">+ Add new</a>
+        </div>
+    </div>
+    <div class="row">
+        {% for album in albums %}
+        {% if loop.index%5==0 %}</div><div class="row">{% endif %}
+        <div class="col-md-3 col-xs-12">
+            <div class="row">
+                <span class="col-xs-12">
+                    <a href="{{ path('admin_albums_edit', { 'id': album.id }) }}">
+                        <strong>{{ album.title }}</strong>
+                    </a>
+                    {% if album.photos|length>0 %}
+                    <a target="_blank" href="{{ path('album_view', {'id':album.id}) }}"><span class="fa fa-eye" aria-hidden="true"></span></a>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="row">
+                {% if album.photos.first %}
+                    <div class="col-xs-12">
+                        <img src="{{ asset(album.photos.first.name) | imagine_filter('default_watermark_thumb') }}" class="img-rounded img-responsive" />
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    {% for tag in album.tags %}
+                        <span class="label label-info">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
