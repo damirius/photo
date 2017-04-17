@@ -1,4 +1,4 @@
-.checkout
+Photos
 =========
 
-A Symfony project created on April 13, 2017, 2:15 pm.
+Just a simple demo Symfony project
