@@ -1,0 +1,20 @@
+<div class="comments-list">
+    {% for comment in comments %}
+        <div class="media">
+            <p class="pull-right"><small><time class="timeago" datetime="{{ comment.created | date('Y-m-d\\TH:i:sP') }}">{{ comment.created|date('d-m-Y H:i:s') }}</time></small></p>
+            <a class="media-left" href="#">
+                {% if comment.user.avatarname %}
+                    <img src="{{ asset(comment.user.avatarName) | imagine_filter('default_avatar') }}">
+                {% else %}
+                    <img src="{{ asset('bundles/app/pictures/avatar.jpg') }}">
+                {% endif %}
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading user_name">{{ comment.user.username }}</h4>
+                {{ comment.comment }}
+            </div>
+        </div>
+    {% else %}
+        <div>Be the first one to leave a comment!</div>
+    {% endfor %}
+</div>

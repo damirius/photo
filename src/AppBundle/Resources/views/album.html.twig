@@ -4,6 +4,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/vendor/blueimp-gallery/css/blueimp-gallery.min.css') }}">
 {% endblock %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -35,13 +36,34 @@
                 {% endfor %}
             </div>
         </div>
+        {% if app.user %}
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2 col-xs-offset-0">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-xs-12">
+                <div class="page-header">
+                    <h1><small class="pull-right">{{ comments|length }} comments</small> Comments </h1>
+                </div>
+                {% include '@App/helper/comment_list.html.twig' with {'comments':comments} %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('assets/vendor/blueimp-gallery/js/blueimp-gallery.min.js') }}"></script>
-    <script>
+    <script src="{{ asset('assets/vendor/jquery-timeago/jquery.timeago.js') }}"></script>
+    <script type="application/javascript">
+        jQuery(document).ready(function() {
+            jQuery("time.timeago").timeago();
+        });
         blueimp.Gallery(
                 [
                     {% for photo in album.photos %}

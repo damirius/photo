@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Form\Type\UserType;
+use AppBundle\Entity\Comment;
+use AppBundle\Form\Type\CommentType;
 
 class DefaultController extends Controller
 {
@@ -33,8 +35,23 @@ class DefaultController extends Controller
         if($album === null) {
             throw $this->createNotFoundException('This album does not exist');
         }
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $comment->setUser($this->getUser());
+            $comment->setAlbum($album);
+            $em->persist($comment);
+            $em->flush();
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment);
+        }
+        $comments = $em->getRepository('AppBundle:Comment')->findBy(['album'=>$album],['created'=>'DESC']);
         return $this->render('@App/album.html.twig', [
             'album' => $album,
+            'comments' => $comments,
+            'form' => $form->createView()
         ]);
     }
 
